@@ -39,14 +39,14 @@
 		innerMargin = DEFAULT_MARGIN;
 		cornerRadius = DEFAULT_CORNER_RADIUS;
 		borderWidth = DEFAULT_BORDER_WIDTH;
-		borderColor = [DEFAULT_BORDER_COLOR retain];
-		contentColor = [DEFAULT_BACKGROUND_COLOR retain];
+		borderColor = DEFAULT_BORDER_COLOR;
+		contentColor = DEFAULT_BACKGROUND_COLOR;
 		shouldBounce = DEFAULT_BOUNCE;
 		
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 		self.autoresizesSubviews = YES;
 		
-		self.contentContainer = [[[UIView alloc] initWithFrame:self.bounds] autorelease];
+		self.contentContainer = [[UIView alloc] initWithFrame:self.bounds];
 		self.contentContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 		self.contentContainer.autoresizesSubviews = YES;
 		[self addSubview:self.contentContainer];
@@ -63,13 +63,9 @@
 }
 
 - (void)dealloc {
-	self.roundedRect = nil;
-	self.closeButton = nil;
-	self.contentContainer = nil;
 	self.borderColor = nil;
 	self.contentColor = nil;
 	delegate = nil;
-	[super dealloc];
 }
 
 #pragma mark - Description
@@ -89,15 +85,11 @@
 	self.roundedRect.layer.borderWidth = borderWidth;
 }
 - (void)setBorderColor:(UIColor *)newColor {
-	[newColor retain];
-	[borderColor release];
 	borderColor = newColor;
 	
 	self.roundedRect.layer.borderColor = [borderColor CGColor];
 }
 - (void)setContentColor:(UIColor *)newColor {
-	[newColor retain];
-	[contentColor release];
 	contentColor = newColor;
 	
 	self.roundedRect.backgroundColor = contentColor;
@@ -105,7 +97,7 @@
 
 - (UIView *)roundedRect {
 	if (!roundedRect) {
-		self.roundedRect = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+		self.roundedRect = [[UIView alloc] initWithFrame:CGRectZero];
 		roundedRect.layer.masksToBounds = YES;
 		roundedRect.backgroundColor = self.contentColor;
 		roundedRect.layer.borderColor = [self.borderColor CGColor];
@@ -132,7 +124,7 @@
 }
 - (UIView *)contentView {
 	if (!contentView) {
-		self.contentView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+		self.contentView = [[UIView alloc] initWithFrame:CGRectZero];
 		self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 		self.contentView.autoresizesSubviews = YES;
 		[self.contentContainer addSubview:contentView];
