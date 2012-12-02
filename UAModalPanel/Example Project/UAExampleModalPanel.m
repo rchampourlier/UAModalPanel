@@ -30,11 +30,11 @@
 			// Funky time.
 			UADebugLog(@"Showing a randomized panel for modalPanel: %@", self);
 			
-			// Margin between edge of container frame and panel. Default = 20.0
-			self.outerMargin = ((arc4random() % 4) + 1) * 20.0f;
+			// Margin between edge of container frame and panel. Default = {20.0, 20.0, 20.0, 20.0}
+			self.margin = UIEdgeInsetsMake(((arc4random() % 4) + 1) * 20.0f, ((arc4random() % 4) + 1) * 20.0f, ((arc4random() % 4) + 1) * 20.0f, ((arc4random() % 4) + 1) * 20.0f);
 			
-			// Margin between edge of panel and the content area. Default = 20.0
-			self.innerMargin = ((arc4random() % 4) + 1) * 10.0f;
+			// Margin between edge of panel and the content area. Default = {20.0, 20.0, 20.0, 20.0}
+			self.padding = UIEdgeInsetsMake(((arc4random() % 4) + 1) * 20.0f, ((arc4random() % 4) + 1) * 20.0f, ((arc4random() % 4) + 1) * 20.0f, ((arc4random() % 4) + 1) * 20.0f);
 			
 			// Border color of the panel. Default = [UIColor whiteColor]
 			self.borderColor = [UIColor colorWithRed:(arc4random() % 2) green:(arc4random() % 2) blue:(arc4random() % 2) alpha:1.0];
@@ -51,6 +51,9 @@
 			// Shows the bounce animation. Default = YES
 			self.shouldBounce = (arc4random() % 2);
 			
+			// Shows the actionButton. Default title is nil, thus the button is hidden by default
+			[self.actionButton setTitle:@"Foobar" forState:UIControlStateNormal];
+
 			// Height of the title view. Default = 40.0f
 			[self setTitleBarHeight:((arc4random() % 5) + 2) * 20.0f];
 			

@@ -1,21 +1,21 @@
 What is UAModalPanel?
 ---------------------
 
-![UAModalPanel Example Pic](http://files.urbanapps.com/images/_UAModalPanel.jpg "UAModalPanel Example Pic")![UAModalPanel Example Pic 2](http://files.urbanapps.com/images/_UAModalPanel2.jpg "UAModalPanel Example Pic 2")![UAModalPanel Example Pic 3](http://files.urbanapps.com/images/_UAModalPanel3.jpg "UAModalPanel Example Pic 3")
+![UAModalPanel Example Pic](https://github.com/coneybeare/UAModalPanel/raw/master/_README_ASSETS/UAModalPanel.jpg)![UAModalPanel Example Pic 2](https://github.com/coneybeare/UAModalPanel/raw/master/_README_ASSETS/UAModalPanel2.jpg)![UAModalPanel Example Pic 3](https://github.com/coneybeare/UAModalPanel/raw/master/_README_ASSETS/UAModalPanel3.jpg)![UAModalPanel Example Pic 4](https://github.com/coneybeare/UAModalPanel/raw/master/_README_ASSETS/UAModalPanel4.jpg)
 
-UAModalPanel is a highly customizable, alternative modal panel that you can popup in your view controllers to show content that might not need an entire new screen to show. It has a bounce animation, content fade-in, and a fancy noisy-gradient title bar. It works on the iPhone and iPad, with or without rotation, and is a non-ARC project.
+UAModalPanel is a highly customizable, alternative modal panel that you can popup in your view controllers to show content that might not need an entire new screen to show. It has a bounce animation, content fade-in, and a fancy noisy-gradient title bar. It works on the iPhone and iPad, with or without rotation.
 
 Example Video
 ---------------------
 http://www.youtube.com/watch?v=AJDR0GAsV9E
 
 
-<hr/>
+
 Step 0: Prerequisites
 ---------------------
 You'll need at least Xcode 3.2 and an iOS 4.0+ project
 
-<hr/>
+
 Step 1: Get UAModalPanel files (add as Git submodule)
 ----------------
 In terminal navigate to the root of your project directory and run these commands (assuming your project is a git repo):
@@ -27,7 +27,7 @@ This creates new submodule, downloads the files to Submodules/UAModalPanel direc
 
     git submodule update
 
-<hr/>
+
 Step 2: Add UAModalPanel to your project
 ------------------------------------
 
@@ -47,7 +47,7 @@ Expand the 'Frameworks' group in your project's file list. Make sure you have th
 
 If you are missing any frameworks, right click the 'Frameworks' group and select Add -> Existing Frameworks. Select the framework you are missing and add it to your project.
 
-<hr/>
+
 Step 3: Implement UAModalPanel
 ------------------------
 
@@ -67,7 +67,7 @@ Display the panel by creating an instance of your subclass and show it from a po
 }
 ````
 
-UAModalPanel knows how to close itself, but if you want more control, read on.
+UAModalPanel knows how to close itself, but if you want more control or action button handling, read on.
 
 **Optional Event Handling**
 
@@ -87,6 +87,11 @@ You can optionally implement either the UAModalPanelDelegate methods for callbac
 //   Return YES to close the panel, otherwise NO
 //   Only used if delegate is set and not using blocks.
 - (BOOL)shouldCloseModalPanel:(UAModalPanel *)modalPanel;
+
+// Optional: This is called when the action button is pressed
+//   Action button is only visible when its title is non-nil;
+//   Only used if delegate is set and not using blocks.
+- (void)didSelectActionButton:(UAModalPanel *)modalPanel;
 
 // Optional: This is called before the close animations.
 //   Only used if delegate is set and not using blocks.
@@ -109,6 +114,11 @@ You can optionally implement either the UAModalPanelDelegate methods for callbac
             // Do something else awesome after it closes.
         }];
     };
+    
+//   Panel is a reference to the modalPanel
+    modalPanel.onActionPressed = ^(UAModalPanel* panel) {
+        // Do something awesome when the action button is pressed
+    };
 
 ````
 
@@ -128,7 +138,7 @@ You can add any of these methods to your subclass to get hooks at various points
 
 You can add `UAMODALVIEW_DEBUG` as a preprocessor macro on your project to turn on some potentially useful logging in UAModalPanel.
 
-<hr/>
+
 Step 4: Customize UAModalPanel
 ------------------------
   
@@ -137,11 +147,11 @@ The best place to customize is in your UAModalPanel subclass.
 **UAModalPanel Customizations**
 
 ````objective-c
-// Margin between edge of container frame and panel. Default = 20.0
-self.outerMargin = 30.0f;
+// Margin between edge of container frame and panel. Default = {20.0, 20.0, 20.0, 20.0}
+self.margin = UIEdgeInsetsMake(10.0, 20.0, 30.0, 20.0);
     
-// Margin between edge of panel and the content area. Default = 20.0
-self.innerMargin = 30.0f;
+// Padding between edge of panel and the content area. Default = {20.0, 20.0, 20.0, 20.0}
+self.padding = UIEdgeInsetsMake(10.0, 20.0, 30.0, 20.0);
     
 // Border color of the panel. Default = [UIColor whiteColor]
 self.borderColor = [UIColor blueColor];
@@ -157,6 +167,9 @@ self.contentColor = [UIColor yellowColor];
     
 // Shows the bounce animation. Default = YES
 self.shouldBounce = NO;
+
+// Shows the actionButton. Default title is nil, thus the button is hidden by default
+[self.actionButton setTitle:@"Foobar" forState:UIControlStateNormal];
 ````
 
 **UATitledModalPanel customizations**
@@ -186,27 +199,45 @@ self.headerLabel.font = [UIFont boldSystemFontOfSize:24];
 [[self titleBar] setNoiseOpacity:0.3];
 ````
 
-<hr/>
+
 Step 5: There is no step 5.
 ------------------------
 
 That's it. Please feel free to fork and submit pull requests, fix issues or whatever else.
 
-<hr/>
+
+ARC Support
+------------------------
+UAModalPanel is not using ARC, but you can use it in your ARC project by adding `-fno-objc-arc` compiler flag to the "Compile Sources" section found in the Target's "Build Settings" tab
+
+![ARC Settings](https://github.com/coneybeare/UAModalPanel/raw/master/_README_ASSETS/UAModalPanelARC.png)
+
+
+Cocoapods
+------------------------
+UAModalPanel can be added to a project using [Cocoapods](https://github.com/CocoaPods/CocoaPods)
+
+
 App that are using UAModalPanel:
 ------------------------
 If you are using UAModalPanel, please contact me to get added to this list!
 
 * [Ambiance](http://ambianceapp.com/iphone), [Ambiance Lite](http://ambianceapp.com/iphone)
-* [NPR Hourly News](http://nprhourlynews.com)
+* [Hourly News](http://itunes.apple.com/us/app/hourly-news/id493859859?mt=8)
 * [FlippedText](http://flippedtext.com)
-* [Hanging with Cheats](http://hangingwithcheats.com)
 
-
+ 
 Get in touch:
 ------------------------
-Questions, comments, beer vouchers or death threats!
 
 * [Follow my code blog](http://code.coneybeare.net)
 * [Follow me on Twitter](http://twitter.com/coneybeare) 
 * [Contact me](http://coneybeare.net)
+
+
+Donate:
+------------------------
+Please support us so that we can continue to make UAModalPanel even more awesome! If you are feeling particularly generous, please buy me a beer! 
+
+
+[![Paypal Button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif "Paypal Button")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LGPE58JWZKBG2)
